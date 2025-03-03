@@ -70,7 +70,7 @@ Toute initiative est la bienvenue, tant que les fonctionnalités demandées sont
 | mu        |               |               |                |                   |
 | nu        |               |               |                |                   |
 | xi        |               |               |                |                   |
-| omicron   |               |               |                |                   |
+| omicron   |Victor Savalle |Vincent Frin   |https://github.com/KaptainHaddock/TD-ArchiWeb| TBD               |
 | pi        |               |               |                |                   |
 | rho       |               |               |                |                   |
 | sigma     |               |               |                |                   |

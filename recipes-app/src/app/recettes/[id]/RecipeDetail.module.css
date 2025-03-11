@@ -1,0 +1,121 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .imageContainer {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background-color: #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .imageContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .titleContainer {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: -80px;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .titleContainer h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2f855a;
+  }
+  
+  .titleContainer p {
+    color: #4a5568;
+    margin-top: 8px;
+  }
+  
+  .infoContainer {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.875rem;
+    color: #718096;
+  }
+  
+  .infoContainer span {
+    background-color: #f0fff4;
+    color: #2f855a;
+    padding: 8px 12px;
+    border-radius: 9999px;
+  }
+  
+  .mainContent {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 40px;
+  }
+  
+  @media (min-width: 768px) {
+    .mainContent {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+  
+  .ingredients,
+  .instructions {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ingredients h2,
+  .instructions h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2f855a;
+    margin-bottom: 16px;
+  }
+  
+  .ingredients ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #4a5568;
+  }
+  
+  .instructions p {
+    color: #4a5568;
+    white-space: pre-line;
+  }
+  
+  .favoriteButton {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 12px 24px;
+    background-color: #38a169;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .favoriteButton:hover {
+    background-color: #2f855a;
+  }

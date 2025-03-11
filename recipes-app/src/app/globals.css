@@ -1,80 +1,151 @@
+/* 🔹 Global Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f8f9fa;
+  color: #333;
 }
 
+/* 🔹 Barre de navigation */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0070f3;
+  background: #32a852; /* Vert UberEats */
   padding: 15px 20px;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  font-size: 1.5rem;
-  cursor: pointer;
+  font-size: 1.8rem;
   font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* 🔹 Boutons */
 .btn {
-  background: white;
-  color: #0070f3;
+  background: #32a852; /* Vert UberEats */
+  color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
+  padding: 12px 18px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .btn:hover {
-  background: #e0e0e0;
+  background: #288a40; /* Vert plus foncé */
+  transform: scale(1.05);
 }
 
+/* Bouton inversé */
+.btn.secondary {
+  background: white;
+  color: #32a852;
+  border: 2px solid #32a852;
+}
+
+.btn.secondary:hover {
+  background: #32a852;
+  color: white;
+}
+
+/* 🔹 Conteneur principal */
 .container {
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 1000px;
+  margin: 30px auto;
   padding: 20px;
 }
 
+/* 🔹 Liste des recettes */
 .recipe-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Grille avec cases */
   gap: 20px;
+  padding: 20px;
 }
 
+/* 🔹 Cartes de recettes */
 .recipe-card {
   background: white;
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
 }
 
 .recipe-card img {
   max-width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: cover;
   border-radius: 8px;
 }
 
-.recipe-card:hover {
-  background: #f0f0f0;
-}
-
-.btn {
-  background: #0070f3;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
+.recipe-card h3 {
+  font-size: 1.2rem;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 10px;
+  color: #32a852;
 }
 
-.btn:hover {
-  background: #005bb5;
+.recipe-card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 8px;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 🔹 Popups */
+.popup-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.popup {
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fade-in 0.5s ease-in-out;
+}
+
+.popup.success {
+  background-color: #32a852;
+}
+
+.popup.error {
+  background-color: red;
+}
+
+/* 🔹 Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

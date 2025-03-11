@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getRecipes } from "@/services/api";
 import { useRouter } from "next/navigation";
 
 interface Recipe {
@@ -16,16 +16,14 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    axios.get("https://gourmet.cours.quimerch.com/recipes", {
-      headers: { Accept: "application/json" }
-    })
-    .then(response => setRecipes(response.data))
-    .catch(error => console.error("Erreur lors du chargement des recettes :", error));
+    getRecipes()
+      .then(setRecipes)
+      .catch(error => console.error("Erreur lors du chargement des recettes :", error));
   }, []);
 
   return (
     <div className="container">
-      <h1>🍽️ Liste des Recettes</h1>
+      <h1 className="text-center text-3xl font-bold text-green-700">🍽️ Liste des Recettes</h1>
       <div className="recipe-list">
         {recipes.map(recipe => (
           <div key={recipe.id} className="recipe-card" onClick={() => router.push(`/recettes/${recipe.id}`)}>

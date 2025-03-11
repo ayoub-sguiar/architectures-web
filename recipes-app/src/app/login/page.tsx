@@ -1,57 +1,80 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { loginUser, logoutUser } from "@/services/api";
+import "./login.css";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [user, setUser] = useState<string | null>(null);
+  const [popupMessage, setPopupMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
+  const [warningMessage, setWarningMessage] = useState<string | null>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUsername = localStorage.getItem("username");
+      if (storedUsername) {
+        setUser(storedUsername);
+      } else {
+        setUser(null);
+        router.push("/login"); // Redirect to login page if not logged in
+      }
+    }
+    const msg = searchParams.get("message");
+    if (msg) {
+      setWarningMessage(msg);
+    }
+  }, [searchParams, router]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "user" && password === "password") {
-      localStorage.setItem("isAuthenticated", "true");
-      router.push("/");
-    } else {
-      setError("Identifiants incorrects !");
+    const result = await loginUser(username, password);
+    setPopupMessage(result);
+    if (result.type === "success") {
+      setUser(username); // Set the user state
+      localStorage.setItem("username", username); // Store the username in local storage
+      setTimeout(() => router.push("/"), 3000);
     }
   };
 
+  const handleLogout = async () => {
+    const result = await logoutUser();
+    setPopupMessage(result);
+    setUser(null);
+    localStorage.removeItem("username"); // Clear the stored username on logout
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 shadow-md rounded-md w-96">
-        <h2 className="text-2xl font-bold text-center mb-4">Connexion</h2>
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block font-semibold">Nom d'utilisateur</label>
-            <input
-              type="text"
-              className="w-full px-3 py-2 border rounded-md"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+    <div className="login-container">
+      <div className="popup-container">
+        {popupMessage && (
+          <div className={`popup ${popupMessage.type}`}>
+            {popupMessage.text}
           </div>
-          <div>
-            <label className="block font-semibold">Mot de passe</label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border rounded-md"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-          >
-            Se connecter
-          </button>
-        </form>
+        )}
+      </div>
+
+      <div className="login-box">
+        {warningMessage && <div className="warning-message">⚠️ {warningMessage}</div>}
+        {user ? (
+          <>
+            <h2>Bonjour, {user} 👋</h2>
+            <button onClick={handleLogout} className="btn logout">Se déconnecter</button>
+          </>
+        ) : (
+          <>
+            <h2>Connexion</h2>
+            <form onSubmit={handleLogin}>
+              <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)} required />
+              <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <button type="submit" className="btn login">Se connecter</button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

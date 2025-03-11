@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./globals.css";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    setIsAuthenticated(!!localStorage.getItem("isAuthenticated"));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    router.push("/login");
+  const goToFavorites = () => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) {
+      // ✅ Supprime le message de la barre de navigation en attendant la redirection
+      setTimeout(() => {
+        router.push("/login?message=connectez-vous pour voir vos favoris");
+      }, 0);
+    } else {
+      router.push("/favorites");
+    }
   };
 
   return (
@@ -23,11 +24,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <nav className="navbar">
           <div className="logo" onClick={() => router.push("/")}>🍽️ Recettes</div>
           <div>
-            {isAuthenticated ? (
-              <button className="btn" onClick={handleLogout}>Se déconnecter</button>
-            ) : (
-              <button className="btn" onClick={() => router.push("/login")}>Se connecter</button>
-            )}
+            <button className="btn" onClick={goToFavorites}>⭐ Favoris</button>
+            <button className="btn login" onClick={() => router.push("/login")}>Connexion</button>
           </div>
         </nav>
         <main>{children}</main>

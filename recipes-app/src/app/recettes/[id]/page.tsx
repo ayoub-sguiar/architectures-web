@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import axios from "axios";
 
 interface Recipe {
+  id: string;
   name: string;
   image_url: string;
   description: string;
@@ -26,6 +27,28 @@ export default function RecipeDetail() {
     .catch(error => console.error("Erreur lors du chargement de la recette :", error));
   }, [id]);
 
+  const addFavorite = async () => {
+    const username = localStorage.getItem("username");
+
+    if (!username) {
+      alert("Veuillez vous connecter pour ajouter aux favoris.");
+      return;
+    }
+
+    try {
+      await fetch(`https://gourmet.cours.quimerch.com/users/${username}/favorites?recipeID=${id}`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      alert("Ajouté aux favoris !");
+    } catch (error) {
+      console.error("Erreur lors de l'ajout aux favoris :", error);
+    }
+  };
+
   if (!recipe) return <p>Chargement...</p>;
 
   return (
@@ -37,6 +60,9 @@ export default function RecipeDetail() {
       <p><strong>Temps de cuisson :</strong> {recipe.cook_time} min</p>
       <p><strong>Portions :</strong> {recipe.servings}</p>
       <p>{recipe.description}</p>
+
+      {/* 🔹 Bouton Ajouter aux favoris 🔹 */}
+      <button className="btn" onClick={addFavorite}>⭐ Ajouter aux favoris</button>
     </div>
   );
 }

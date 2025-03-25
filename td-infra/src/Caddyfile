@@ -22,19 +22,9 @@ alpha.cours.quimerch.com {
 	reverse_proxy alpha:80
 }
 
-beta.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy beta:80
-}
-
 gamma.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy gamma:80
-}
-
-delta.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy delta:80
 }
 
 epsilon.cours.quimerch.com {
@@ -50,16 +40,6 @@ zeta.cours.quimerch.com {
 eta.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy eta:80
-}
-
-theta.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy theta:80
-}
-
-iota.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy iota:80
 }
 
 kappa.cours.quimerch.com {
@@ -82,24 +62,9 @@ nu.cours.quimerch.com {
 	reverse_proxy nu:80
 }
 
-xi.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy xi:80
-}
-
-omicron.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy omicron:80
-}
-
 pi.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy pi:80
-}
-
-rho.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy rho:80
 }
 
 sigma.cours.quimerch.com {
@@ -115,11 +80,6 @@ tau.cours.quimerch.com {
 upsilon.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy upsilon:80
-}
-
-phi.cours.quimerch.com {
-	encode gzip zstd
-	reverse_proxy phi:80
 }
 
 chi.cours.quimerch.com {
@@ -145,4 +105,19 @@ test.cours.quimerch.com {
 grafana.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy grafana:3000
+}
+
+perf.cours.quimerch.com {
+	encode gzip zstd
+	reverse_proxy perf:8570
+}
+
+portainer.cours.quimerch.com {
+	encode gzip zstd
+	reverse_proxy portainer:9443 {
+		transport http {
+			tls
+			tls_insecure_skip_verify
+		}
+	}
 }

@@ -56,27 +56,27 @@ Toute initiative est la bienvenue, tant que les fonctionnalités demandées sont
 
 | Team Name | Team Member 1 | Team Member 2 | Git Repository | Docker Image Link |
 | --------- | ------------- | ------------- | -------------- | ----------------- |
-| alpha     |               |               |                |                   |
-| beta      |               |               |                |                   |
-| gamma     |               |               |                |                   |
+| alpha     | Arthur Baudin | Clara Guillet |  https://github.com/dd-absol/archiweb-project |[lien docker hub](https://hub.docker.com/r/ddabsol/gourmet-astro)|
+| beta      | Damien Ouzillou | Theo Garampon | https://github.com/DamsOuz/GourmetRepo/ | https://hub.docker.com/r/damsouz/gourmet-recipes-app |
+| gamma     |Antoine Cheneau|               |         https://github.com/chenow/gourmitton         |    [chenow/gourmitton](https://hub.docker.com/r/chenow/gourmitton)               |
 | delta     |               |               |                |                   |
-| epsilon   |               |               |                |                   |
-| zeta      |               |               |                |                   |
-| eta       |               |               |                |                   |
+| epsilon   |  Liwei SUN    | Dac-An VO     | https://github.com/Dac-An-hub/cass-app               |                   |
+| zeta      |  Laurent Sun             |   Sharmilan             |     [https://github.com/laurentsunCs/RecipeApp](https://github.com/laurentsunCs/RecipeApp/)           |    llsun/recipe-app|
+| eta       |  Ayoub SGUIAR LHAMDANI |               |     https://github.com/ayoub-sguiar/architectures-web           |                   |
 | theta     |               |               |                |                   |
 | iota      |               |               |                |                   |
-| kappa     |               |               |                |                   |
-| lambda    |               |               |                |                   |
-| mu        |               |               |                |                   |
-| nu        |               |               |                |                   |
+| kappa     |  Pierre-Olivier Coudert             |               |  https://github.com/MRmdum/TD-ArchiWeb              |                   |
+| lambda    |Antoine Castel |Arnaud PY      |[Lien GitHub](https://github.com/antoinecstl/Gourmitton)|[nonouille/lambda-archi-web](https://hub.docker.com/repository/docker/nonouille/lambda-archi-web/general)|
+| mu        |Clara Bou Hanna             |Tom Bray|              |  https://hub.docker.com/repository/docker/clarabh/gourmet-frontend/general           |
+| nu        |Elias Salvan   |Antoine Pélerin|https://github.com/elsgit43/architectures-web|https://hub.docker.com/r/elsal1/bon-app|
 | xi        |               |               |                |                   |
 | omicron   |Victor Savalle |Vincent Frin   |https://github.com/KaptainHaddock/TD-ArchiWeb| https://hub.docker.com/repository/docker/victorsavalle/tdarchiweb/tags/latest/sha256-5c182624b119fc8dcb30aae5c4e82ca876598facbc156e8d4a30b6bab1b0880c            |
-| pi        |               |               |                |                   |
+| pi        | Elie Caratgé  | Ayman Ben Souira | [git@github.com:dotdelete/gourmet.git](https://github.com/dotdelete/gourmet.git) | [dotdelete/gourmet:latest](https://hub.docker.com/repository/docker/dotdelete/gourmet/general)                  |
 | rho       |               |               |                |                   |
-| sigma     |               |               |                |                   |
-| tau       |               |               |                |                   |
-| upsilon   |               |               |                |                   |
+| sigma     |Thibault Muller|Pierre-Louis Veyrenc|[tibo-mllr/TP-archi-web](https://github.com/tibo-mllr/TP-archi-web)|[tibo-mllr/sigma-cooking](https://hub.docker.com/r/tibomllr/sigma-cooking)|
+| tau       | Timothée Vargenau              |               | [Lien GitHub](https://github.com/timothee-vrg/architectures-web-recipe)               |                   |
+| upsilon   |Alex Melhem|               |[J'ai faim](https://github.com/41ks/archiweb-jaifaim)|[am0911/jaifaim](https://hub.docker.com/r/am0911/jaifaim)|
 | phi       |               |               |                |                   |
-| chi       |               |               |                |                   |
-| psi       |               |               |                |                   |
-| omega     |               |               |                |                   |
+| chi       | Alexandre Correia   |  Gustave Legrand     | https://github.com/AlexandreCGithub/archiweb-TD               |  https://hub.docker.com/r/magnoir/archiweb-td                 |
+| psi       | Lisa Lupi|Thomas Soupizet|[github](https://github.com/lisa-lupi-cs/archiweb)|[docker](https://hub.docker.com/r/thomas01111/duo_gourmand)|
+| omega     | Thomas Melwig |Valentin Gérard|[CookingMadness](https://github.com/tmelwig/CookingMadness)|[DockerImage](https://hub.docker.com/repository/docker/ankydios/cooking-madness/general)|

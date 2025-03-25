@@ -22,6 +22,11 @@ alpha.cours.quimerch.com {
 	reverse_proxy alpha:80
 }
 
+beta.cours.quimerch.com {
+	encode gzip zstd
+	reverse_proxy beta:80
+}
+
 gamma.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy gamma:80
@@ -60,6 +65,11 @@ mu.cours.quimerch.com {
 nu.cours.quimerch.com {
 	encode gzip zstd
 	reverse_proxy nu:80
+}
+
+omicron.cours.quimerch.com {
+	encode gzip zstd
+	reverse_proxy omicron:80
 }
 
 pi.cours.quimerch.com {

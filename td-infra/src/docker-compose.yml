@@ -81,6 +81,10 @@ services:
     image: "ddabsol/gourmet-astro:latest"
     container_name: "alpha"
 
+  beta:
+    image: "damsouz/gourmet-recipes-app:latest"
+    container_name: "beta"
+
   gamma:
     image: "chenow/gourmitton:latest"
     container_name: "gamma"
@@ -113,6 +117,10 @@ services:
     image: "elsal1/bon-app:latest"
     container_name: "nu"
 
+  omicron:
+    image: "victorsavalle/tdarchiweb:latest"
+    container_name: "omicron"
+
   pi:
     image: "dotdelete/gourmet:latest"
     container_name: "pi"
@@ -122,7 +130,7 @@ services:
     container_name: "sigma"
 
   tau:
-    image: "nginx:latest"
+    image: "timotheevargenau/archiweb-recipe:latest"
     container_name: "tau"
 
   upsilon:

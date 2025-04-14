@@ -79,6 +79,8 @@ export const getRecipes = async () => {
  */
 export const getFavorites = async () => {
   try {
+    if (typeof window === "undefined") return [];
+
     const token = localStorage.getItem("token");
     if (!token) return [];
 
@@ -86,17 +88,27 @@ export const getFavorites = async () => {
       method: "GET",
       headers: {
         Accept: "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    if (!response.ok) throw new Error("Erreur lors de la récupération des favoris");
+    if (!response.ok) {
+      const err = await response.text();
+      throw new Error(`Erreur API: ${response.status} - ${err}`);
+    }
 
-    return await response.json();
+    const rawData = await response.json();
+
+    // 🔥 Ici on extrait le champ "recipe" de chaque élément
+    const recipes = rawData.map((fav: { recipe: any }) => fav.recipe);
+    return recipes;
+
   } catch (error) {
-    console.error("Erreur lors de la récupération des favoris :", error);
+    console.error("❌ Erreur lors de la récupération des favoris :", error);
     return [];
   }
 };
+
 
 /**
  * 📌 Ajoute une recette aux favoris
@@ -104,35 +116,58 @@ export const getFavorites = async () => {
 export const addFavorite = async (recipeID: string) => {
   try {
     const username = localStorage.getItem("username");
-    if (!username) return { success: false, message: "Utilisateur non authentifié" };
+    const token = localStorage.getItem("token");
+
+    if (!username || !token) {
+      return { success: false, message: "Utilisateur non authentifié" };
+    }
 
     const response = await fetch(`${API_BASE_URL}/users/${username}/favorites?recipeID=${recipeID}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
+      body: undefined,
     });
 
-    if (!response.ok) throw new Error("Erreur lors de l'ajout aux favoris");
+    if (response.status === 409) {
+      // 🎯 Message personnalisé pour l'erreur de doublon
+      return {
+        success: true,
+        message: "Cette recette est déjà dans vos favoris ✅",
+      };
+    }
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return { success: false, message: `Erreur ${response.status} : ${errorText}` };
+    }
 
     return { success: true, message: "Ajouté aux favoris ✅" };
   } catch (error) {
-    return { success: false, message: "Échec de l'ajout aux favoris ❌" };
+    return { success: false, message: `Échec de l'ajout ❌ ${error}` };
   }
 };
+
 
 /**
  * 📌 Supprime une recette des favoris
  */
-export const removeFavorite = async (recipeID: string) => {
+export const removeFavorite = async (recipeID: string): Promise<{ success: boolean; message: string }> => {
   try {
     const username = localStorage.getItem("username");
+    const token = localStorage.getItem("token");
     if (!username) return { success: false, message: "Utilisateur non authentifié" };
 
     const response = await fetch(`${API_BASE_URL}/users/${username}/favorites?recipeID=${recipeID}`, {
       method: "DELETE",
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     if (!response.ok) throw new Error("Erreur lors de la suppression des favoris");
@@ -142,3 +177,4 @@ export const removeFavorite = async (recipeID: string) => {
     return { success: false, message: "Échec de la suppression des favoris ❌" };
   }
 };
+

@@ -83,7 +83,10 @@ export default function RecipeDetail() {
       {/* Bouton Favoris */}
       <div className="text-center mt-8">
         <button
-          onClick={() => addFavorite(recipe.id)}
+          onClick={async () => {
+            const result = await addFavorite(recipe.id);
+            alert(result.message);
+          }}
           className={styles.favoriteButton}
         >
           ⭐ Ajouter aux favoris

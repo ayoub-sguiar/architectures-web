@@ -2,81 +2,82 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { getFavorites, removeFavorite } from "@/services/api";
 
 interface Recipe {
   id: string;
   name: string;
   image_url: string;
+  description: string;
+}
+
+interface FavoriteAPIResponse {
+  recipe: Recipe;
+
+  
 }
 
 export default function FavoritesPage() {
-  const [favorites, setFavorites] = useState<Recipe[]>([]);
-  const token = localStorage.getItem("token");
-  const username = localStorage.getItem("username");
+  const [favorites, setFavorites] = useState<FavoriteAPIResponse[] | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) return;
-    axios.get("https://gourmet.cours.quimerch.com/favorites", {
-      headers: { Accept: "application/json", Authorization: `Bearer ${token}` }
-    })
-    .then(response => setFavorites(response.data || []))
-    .catch(error => console.error("Erreur lors du chargement des favoris :", error));
-  }, [token]);
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
 
-  if (!token) {
+    if (!token || !username) {
+      router.push("/login?message=Connectez-vous pour voir vos favoris");
+      return;
+    }
+
+    getFavorites().then(setFavorites).catch(console.error);
+  }, [router]);
+
+  if (favorites === null) {
+    return <p className="text-center mt-10 text-gray-500">Chargement...</p>;
+  }
+
+  if (favorites.length === 0) {
     return (
       <div className="container">
-        <h2>⚠️ Vous devez être connecté pour voir vos favoris.</h2>
-        <button className="btn" onClick={() => router.push("/login")}>Se connecter</button>
+        <h1 className="text-center text-3xl font-bold text-green-700">⭐ Mes Recettes Favorites</h1>
+        <p className="text-center text-gray-500">Aucune recette en favoris.</p>
       </div>
     );
   }
 
-  const addFavorite = async (recipe: Recipe) => {
-    try {
-      await fetch(`https://gourmet.cours.quimerch.com/users/${username}/favorites?recipeID=${recipe.id}`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(recipe)
-      });
-      setFavorites([...favorites, recipe]);
-    } catch (error) {
-      console.error("Erreur lors de l'ajout aux favoris :", error);
-    }
-  };
-
-  const removeFavorite = async (recipeID: string) => {
-    try {
-      await fetch(`https://gourmet.cours.quimerch.com/users/${username}/favorites?recipeID=${recipeID}`, {
-        method: "DELETE",
-        headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
-      });
-      setFavorites(favorites.filter(recipe => recipe.id !== recipeID));
-    } catch (error) {
-      console.error("Erreur lors de la suppression des favoris :", error);
-    }
-  };
-
   return (
     <div className="container">
-      <h1>⭐ Mes Recettes Favorites</h1>
-      {favorites.length === 0 ? <p>Aucune recette en favoris.</p> : (
-        <div className="recipe-list">
-          {favorites.map(recipe => (
-            <div key={recipe.id} className="recipe-card">
-              <img src={recipe.image_url} alt={recipe.name} />
-              <h3>{recipe.name}</h3>
-              <button className="btn remove" onClick={() => removeFavorite(recipe.id)}>❌ Retirer</button>
-            </div>
-          ))}
-        </div>
-      )}
+      <h1 className="text-center text-3xl font-bold text-green-700">⭐ Mes Recettes Favorites</h1>
+      <div className="recipe-list">
+        {favorites.map((fav) => {
+          const recipe = fav.recipe || fav; // support les deux formats (en cas de /favorites qui retourne un objet `recipe`)
+          return (
+          <div
+            key={recipe.id}
+            className="recipe-card cursor-pointer"
+            onClick={() => router.push(`/recettes/${recipe.id}`)}
+          >
+            <img src={recipe.image_url || "/placeholder.jpg"} alt={recipe.name} />
+            <h3>{recipe.name}</h3>
+            <p>{recipe.description?.substring(0, 80)}...</p>
+            <button
+              className="btn remove"
+              onClick={async (e) => {
+                e.stopPropagation(); // 👈 éviter que le clic sur le bouton redirige
+                const result = await removeFavorite(recipe.id);
+                if (result.success) {
+                  setFavorites(favorites.filter((r) => (r.recipe || r).id !== recipe.id));
+                }
+                alert(result.message);
+              }}
+            >
+              ❌ Retirer
+            </button>
+          </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

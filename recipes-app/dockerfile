@@ -1,0 +1,43 @@
+# 🌟 Étape 1: Construire l'application avec Node.js
+FROM node:20-alpine AS builder
+
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
+
+# Copier les fichiers nécessaires
+COPY package.json package-lock.json ./
+
+# Installer les dépendances
+RUN npm install
+
+# Copier tout le code source
+COPY . .
+
+# Définir le port 80 comme port d'exécution
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=80
+
+# Compiler l'application Next.js
+RUN npm run build
+
+# 🌟 Étape 2: Exécuter l'application dans une image plus légère
+FROM node:20-alpine
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers nécessaires depuis l'étape builder
+COPY --from=builder /app/package.json /app/package-lock.json ./
+COPY --from=builder /app/.next .next
+COPY --from=builder /app/public public
+COPY --from=builder /app/node_modules node_modules
+
+# Définir le port d'exécution de l'application
+ENV PORT=80
+
+# Exposer le port 80
+EXPOSE 80
+
+# Démarrer l'application Next.js sur le port 80
+CMD ["npm", "run", "start", "--", "-p", "80"]

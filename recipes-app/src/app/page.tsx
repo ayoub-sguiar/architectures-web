@@ -15,6 +15,24 @@ export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const router = useRouter();
 
+  // ✅ Déconnexion automatique à l'arrivée sur le site
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const alreadyInitialized = localStorage.getItem("sessionInitialized");
+  
+      if (!alreadyInitialized) {
+        // Première visite → on déconnecte et on marque la session comme "initialisée"
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        localStorage.setItem("sessionInitialized", "true");
+        console.log("👋 Première visite : utilisateur déconnecté");
+      } else {
+        console.log("🔁 Session déjà initialisée, pas de déconnexion");
+      }
+    }
+  }, []);
+  
+
   useEffect(() => {
     getRecipes()
       .then(setRecipes)

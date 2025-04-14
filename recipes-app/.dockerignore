@@ -1,0 +1,13 @@
+# Ignorer les fichiers inutiles dans l'image Docker
+node_modules
+.next
+out
+dist
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+.env
+npm-debug.log
+yarn-debug.log
+yarn-error.log

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { addFavorite } from "@/services/api";
@@ -40,10 +41,16 @@ export default function RecipeDetail() {
     <div className={styles.container}>
       {/* Image principale */}
       <div className={styles.imageContainer}>
-        <img
-          src={recipe.image_url || "/placeholder.jpg"}
-          alt={recipe.name}
-        />
+
+      <Image
+        src={recipe.image_url || "/placeholder.jpg"}
+        alt={recipe.name}
+        width={500}
+        height={300}
+        quality={50} // Réduction importante
+        unoptimized={true} // force l'optimisation si possible
+        className="rounded-lg object-cover"
+      />
       </div>
 
       {/* Titre & Infos */}

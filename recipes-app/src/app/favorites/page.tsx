@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getFavorites, removeFavorite } from "@/services/api";
@@ -58,7 +59,15 @@ export default function FavoritesPage() {
             className="recipe-card cursor-pointer"
             onClick={() => router.push(`/recettes/${recipe.id}`)}
           >
-            <img src={recipe.image_url || "/placeholder.jpg"} alt={recipe.name} />
+            <Image
+              src={recipe.image_url || "/placeholder.jpg"}
+              alt={recipe.name}
+              width={300}
+              height={200}
+              quality={50} // Réduction importante
+              unoptimized={true} // force l'optimisation si possible
+              className="rounded-lg object-cover"
+            />
             <h3>{recipe.name}</h3>
             <p>{recipe.description?.substring(0, 80)}...</p>
             <button

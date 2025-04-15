@@ -8,6 +8,5 @@ dist
 Dockerfile
 docker-compose.yml
 .env
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+*.md
+*.log

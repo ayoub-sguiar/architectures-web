@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { getRecipes } from "@/services/api";
 import { useRouter } from "next/navigation";
@@ -42,10 +43,18 @@ export default function Home() {
   return (
     <div className="container">
       <h1 className="text-center text-3xl font-bold text-green-700">🍽️ Liste des Recettes</h1>
-      <div className="recipe-list">
+          <div className="recipe-list">
         {recipes.map(recipe => (
           <div key={recipe.id} className="recipe-card" onClick={() => router.push(`/recettes/${recipe.id}`)}>
-            <img src={recipe.image_url || "/placeholder.jpg"} alt={recipe.name} />
+            <Image
+              src={recipe.image_url || "/placeholder.jpg"}
+              alt={recipe.name}
+              width={300}
+              height={200}
+              quality={50} // Réduction importante
+              unoptimized={true} // force l'optimisation si possible
+              className="rounded-lg object-cover"
+            />
             <h3>{recipe.name}</h3>
             <p>{recipe.description.substring(0, 80)}...</p>
           </div>
